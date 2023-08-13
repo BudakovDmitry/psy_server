@@ -25,18 +25,11 @@ class AuthController {
 
   async login(req: Request, res: Response, next: any) {
     try {
-      // const {username, password} = req.body;
-      // const user = await User.findOne({username})
-      // if (!user) {
-      //   return res.status(400).json({message: `User ${username} is not found`})
-      // }
-      // const validPassword = bcrypt.compareSync(password, user.password)
-      // if (!validPassword) {
-      //   return res.status(400).json({message: 'Wrong password'})
-      // }
+      const { email, password } = req.body;
+      const userData = await AuthService.login(email, password)
 
-      // const token = generateAccessToken(user._id, user.roles);
-      // return res.json({token})
+      res.cookie('refreshToken', userData.refreshToken, {maxAge: 14 * 24 * 60 * 60 * 1000, httpOnly: true})
+      return res.json(userData)
     } catch (e) {
       next(e)
     }
@@ -44,7 +37,10 @@ class AuthController {
 
   async logout(req: Request, res: Response, next: any) {
     try {
-
+      const { refreshToken } = req.cookies;
+      const token = await AuthService.logout(refreshToken);
+      res.clearCookie('refreshToken');
+      return res.json(token);
     } catch (e) {
       next(e)
     }
@@ -63,7 +59,12 @@ class AuthController {
 
   async refresh(req: Request, res: Response, next: any) {
     try {
+      const { refreshToken } = req.cookies;
 
+      const userData = await AuthService.refresh(refreshToken)
+
+      res.cookie('refreshToken', userData.refreshToken, {maxAge: 14 * 24 * 60 * 60 * 1000, httpOnly: true})
+      return res.json(userData)
     } catch (e) {
       next(e)
     }

@@ -14,12 +14,7 @@ class UserController {
   }
   async getAllUsers(req: Request, res: Response) {
     try {
-      // @ts-ignore
-      let users = [];
-      if (!req.query.destination) {
-        users = await UserService.getAllUsers();
-      }
-      // @ts-ignore
+      const users = await UserService.getAllUsers();
       return res.json(users);
     } catch (error) {
       res.status(500).json(error);
