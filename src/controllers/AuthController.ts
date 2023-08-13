@@ -11,8 +11,8 @@ class AuthController {
         // @ts-ignore
         return next(ApiError.BadRequest('Помилка при валідації', errors.array()))
       }
-      const {email, password} = req.body;
-      const userData = await AuthService.registration(email, password)
+      const {email, password, name, phoneNumber} = req.body;
+      const userData = await AuthService.registration(email, password, name, phoneNumber)
 
       res.cookie('refreshToken', userData.refreshToken, {maxAge: 14 * 24 * 60 * 60 * 1000, httpOnly: true})
 
