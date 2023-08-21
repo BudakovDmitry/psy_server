@@ -17,7 +17,11 @@ const router = new AppRouter(app);
 
 const specs = swaggerJsDoc(options);
 
-app.use(cors());
+const corsOptions = {
+  origin: 'http://localhost:3000'
+}
+
+app.use(cors(corsOptions));
 app.set('port', process.env.PORT || 5000);
 app.use(express.json());
 app.use(cookieParser())
