@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import {DiarySuccessType} from "../types/types";
 
 const userSchema = new mongoose.Schema(
   {
@@ -26,6 +27,13 @@ const userSchema = new mongoose.Schema(
       },
       avatar: {
           type: String,
+      },
+      diarySuccess: {
+          type: [{
+              title: String,
+              description: String,
+              date: String,
+          }]
       },
       roles: [{ type: String, ref: 'Role' }]
   },
