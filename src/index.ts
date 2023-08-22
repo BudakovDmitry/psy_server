@@ -18,13 +18,14 @@ const router = new AppRouter(app);
 const specs = swaggerJsDoc(options);
 
 const corsOptions = {
-  origin: 'http://localhost:3000'
+  origin: 'http://localhost:3000',
+  credentials: true
 }
 
-app.use(cors(corsOptions));
 app.set('port', process.env.PORT || 5000);
 app.use(express.json());
 app.use(cookieParser())
+app.use(cors(corsOptions));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 mongoose.set('strictQuery', false);
 
