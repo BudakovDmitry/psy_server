@@ -7,10 +7,10 @@ import MailService from "./MailService.js";
 import TokenService from "./TokenService.js";
 import UserDto from '../dtos/UserDto.js';
 import ApiError from "../exceptions/ApiError.js";
-import Token from "../models/Token";
+import Role from "../models/Role.js";
 
 class AuthService {
-    async registration(email: string, password: string, name: string, phoneNumber: string) {
+    async registration(email: string, password: string, name: string, phoneNumber: string, roles: string[] = []) {
         const candidate = await User.findOne({ email })
         if (candidate) {
             throw ApiError.BadRequest(`Користувач з такою поштою ${email} вже існує`)
@@ -18,7 +18,8 @@ class AuthService {
 
         const hashPassword = bcrypt.hashSync(password, 7);
         const activationLink = uuidv4();
-        const user = await User.create({email, password: hashPassword, name, phoneNumber, activationLink})
+        const userRole = await Role.findOne({ value: 'USER'})
+        const user = await User.create({email, password: hashPassword, name, phoneNumber, activationLink, roles: [userRole?.value]})
         await MailService.sendActivationMail(email, `${process.env.API_URL}/api/auth/activate/${activationLink}`);
 
         const userDto = new UserDto(user)
