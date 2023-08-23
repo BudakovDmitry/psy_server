@@ -6,6 +6,7 @@ const usersRouter: Router = Router();
 
 usersRouter.post('', UserController.createUser);
 usersRouter.get('', AuthMiddleware, UserController.getAllUsers);
-usersRouter.get('/:id', UserController.getUser);
+usersRouter.get('/:id', AuthMiddleware, UserController.getUser);
+usersRouter.put('', AuthMiddleware, UserController.updateUser);
 
 export default usersRouter;

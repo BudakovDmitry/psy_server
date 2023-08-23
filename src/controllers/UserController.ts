@@ -29,6 +29,15 @@ class UserController {
       res.status(500).json(error);
     }
   }
+
+  async updateUser(req: Request, res: Response) {
+    try {
+      const updatedUser = await UserService.updateUser(req.body);
+      return res.json(updatedUser);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
 }
 
 export default new UserController();

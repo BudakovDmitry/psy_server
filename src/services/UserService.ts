@@ -17,6 +17,16 @@ class UserService {
     const user = await User.findById(id);
     return user;
   }
+
+  async updateUser(user: any) {
+    if (!user._id) {
+      throw new Error('Id is not found');
+    }
+    const updatedUser = await User.findByIdAndUpdate(user._id, user, {
+      new: true
+    });
+    return updatedUser;
+  }
 }
 
 export default new UserService();

@@ -33,6 +33,7 @@ const userSchema = new mongoose.Schema(
               title: String,
               description: String,
               date: String,
+              _id: String,
           }]
       },
       roles: [{ type: String, ref: 'Role' }]
