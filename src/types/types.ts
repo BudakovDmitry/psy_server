@@ -6,6 +6,7 @@ export type UserType = {
   password: string
   avatar: string
   isActivated: boolean
+  isActive: boolean
   activationLink: string
   roles: string[]
   diarySuccess: DiarySuccessType[]
