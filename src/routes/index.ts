@@ -2,6 +2,7 @@ import { Application } from 'express';
 import usersRouter from './api/usersRouter.js';
 import authRouter from "./api/authRouter.js";
 import ErrorMiddleware from "../middlewares/ErrorMiddleware.js";
+import chatsRouter from "./api/chatsRouter.js";
 
 class AppRouter {
   constructor(private app: Application) {}
@@ -12,6 +13,7 @@ class AppRouter {
     });
     this.app.use('/api/users', usersRouter);
     this.app.use('/api/auth', authRouter);
+    this.app.use('/api/chats', chatsRouter);
     this.app.use(ErrorMiddleware)
   }
 }

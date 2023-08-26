@@ -1,6 +1,13 @@
 import { Response, Request } from 'express';
 import UserService from '../services/UserService.js';
 
+interface UserQuery {
+  roles?: {
+    $in: string[]; // Виправлений тип для $in
+  };
+  // Додайте інші поля, які ви хочете використовувати для фільтрації
+}
+
 class UserController {
 
   async createUser(req: Request, res: Response) {
@@ -14,7 +21,15 @@ class UserController {
   }
   async getAllUsers(req: Request, res: Response) {
     try {
-      const users = await UserService.getAllUsers();
+      const query: UserQuery = {};
+
+      if(req.query.role) {
+        query.roles = {
+          // @ts-ignore
+          $in: [req.query.role],
+        };
+      }
+      const users = await UserService.getAllUsers(query);
       return res.json(users);
     } catch (error) {
       res.status(500).json(error);

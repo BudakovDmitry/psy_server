@@ -1,3 +1,5 @@
+import { Document, Types } from 'mongoose'
+
 export type UserType = {
   id: string
   name: string
@@ -17,3 +19,16 @@ export type DiarySuccessType = {
   description: string
   date: string
 }
+
+export interface MessageInterface {
+  sender: Types.ObjectId; // ID користувача, який відправив повідомлення
+  content: string; // Текст повідомлення
+  timestamp: Date; // Дата та час відправлення
+}
+
+export interface ChatInterface extends Document {
+  name: string; // Назва чату
+  participants: Types.ObjectId[]; // Масив ID користувачів, які приймають участь у чаті
+  messages: MessageInterface[]; // Масив повідомлень у чаті
+}
+

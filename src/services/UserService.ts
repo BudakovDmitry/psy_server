@@ -6,8 +6,8 @@ class UserService {
     const createdUser = await User.create(user);
     return createdUser;
   }
-  async getAllUsers() {
-    const users = await User.find();
+  async getAllUsers(query: {}) {
+    const users = await User.find(query);
     return users;
   }
   async getUser(id: string) {
@@ -16,6 +16,11 @@ class UserService {
     }
     const user = await User.findById(id);
     return user;
+  }
+
+  async getUserAdmin() {
+    const admin = await User.find({roles: { $in: ['ADMIN'] }});
+    return admin;
   }
 
   async updateUser(user: any) {
