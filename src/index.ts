@@ -42,8 +42,9 @@ io.on('connection', (socket: any) => {
 
   // Логіка обробки повідомлень і передача їх іншим клієнтам
   socket.on('message', (message: any) => {
-    console.log(`Received message: ${message}`);
-    socket.broadcast.emit('message', message);
+    console.log('message', message)
+    console.log(`Received message: ${message.messageContent.content}`);
+    socket.broadcast.emit('message', message.messageContent.content);
   });
 
   socket.on('disconnect', () => {

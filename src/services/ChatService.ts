@@ -3,6 +3,7 @@
 import Chat from '../models/Chat.js';
 import {MessageInterface} from "../types/types";
 import { Types } from 'mongoose';
+import Message from "../models/Message.js";
 
 // Створення нового чату
 export const createChat = async (name: string, participants: string[]) => {
@@ -22,8 +23,11 @@ export const addMessage = async (chatId: string, sender: Types.ObjectId, content
             throw new Error('Чат не знайдено');
         }
 
-        const message: MessageInterface = { sender, content, timestamp: new Date() };
+        const senderObjectId = new Types.ObjectId(sender);
+
+        const message: MessageInterface = new Message({ sender: senderObjectId, content, timestamp: new Date() });
         chat.messages.push(message);
+
         await chat.save();
         return message;
     } catch (error) {

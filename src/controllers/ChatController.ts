@@ -21,7 +21,9 @@ export const addMessage = async (req: Request, res: Response) => {
     try {
         const { chatId } = req.params;
         const { sender, content } = req.body;
+
         const message: MessageInterface = await chatService.addMessage(chatId, sender, content);
+
         res.status(201).json(message);
     } catch (error: any) {
         console.error('Помилка при додаванні повідомлення:', error.message);

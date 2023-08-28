@@ -1,12 +1,12 @@
-import mongoose, {Types} from 'mongoose';
-import Message from "./Message.js";
+import mongoose, {Schema, Types} from 'mongoose';
+import {messageSchema} from "./Message.js";
 import {ChatInterface} from "types";
 
 const chatSchema = new mongoose.Schema(
     {
         name: { type: String, required: true },
-        participants: [{ type: Types.ObjectId, ref: 'User' }], // 'User' вказує на модель користувача
-        messages: [{ type: Types.ObjectId, ref: 'Message' }],
+        participants: [{ type: Schema.Types.ObjectId, ref: 'User' }], // 'User' вказує на модель користувача
+        messages: [messageSchema],
     },
     { versionKey: false },
 );

@@ -1,11 +1,10 @@
 import {MessageInterface} from "types";
-import mongoose, {Types} from "mongoose";
-import User from "./User.js";
+import mongoose, {Schema, Types} from "mongoose";
 
-const messageSchema =  new mongoose.Schema(
+export const messageSchema =  new mongoose.Schema(
     {
         sender: {
-            type: Types.ObjectId,
+            type: Schema.Types.ObjectId,
             required: true
         },
         content: {
@@ -17,9 +16,8 @@ const messageSchema =  new mongoose.Schema(
             required: true
         },
     },
-    { _id: false }
 );
 
-const Message = mongoose.model<MessageInterface>('message', messageSchema);
+const Message = mongoose.model<MessageInterface>('Message', messageSchema);
 
 export default Message;
