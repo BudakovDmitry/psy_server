@@ -24,6 +24,7 @@ export interface MessageInterface {
   sender: Types.ObjectId; // ID користувача, який відправив повідомлення
   content: string; // Текст повідомлення
   timestamp: Date; // Дата та час відправлення
+  _id: string;
 }
 
 export interface ChatInterface extends Document {

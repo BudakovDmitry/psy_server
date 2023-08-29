@@ -15,7 +15,12 @@ export const messageSchema =  new mongoose.Schema(
             type: Date,
             required: true
         },
+        _id: {
+            type: String,
+            required: true
+        }
     },
+    {_id: false}
 );
 
 const Message = mongoose.model<MessageInterface>('Message', messageSchema);

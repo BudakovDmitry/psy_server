@@ -40,11 +40,12 @@ const io = new Server(server);
 io.on('connection', (socket: any) => {
   console.log('A user connected');
 
-  // Логіка обробки повідомлень і передача їх іншим клієнтам
-  socket.on('message', (message: any) => {
-    console.log('message', message)
-    console.log(`Received message: ${message.messageContent.content}`);
-    socket.broadcast.emit('message', message.messageContent.content);
+  socket.on('sendMessage', (data: any) => {
+    console.log('Повідомлення отримано:', data);
+
+    // Отримайте дані та надішліть їх іншим клієнтам
+    // Наприклад, надіслати повідомлення всім підключеним клієнтам
+    io.emit('newMessage', data);
   });
 
   socket.on('disconnect', () => {

@@ -16,7 +16,7 @@ export const createChat = async (name: string, participants: string[]) => {
 };
 
 // Додавання повідомлення до чату
-export const addMessage = async (chatId: string, sender: Types.ObjectId, content: string) => {
+export const addMessage = async (chatId: string, sender: Types.ObjectId, content: string, _id: string, timestamp: Date) => {
     try {
         const chat = await Chat.findById(chatId);
         if (!chat) {
@@ -25,7 +25,7 @@ export const addMessage = async (chatId: string, sender: Types.ObjectId, content
 
         const senderObjectId = new Types.ObjectId(sender);
 
-        const message: MessageInterface = new Message({ sender: senderObjectId, content, timestamp: new Date() });
+        const message: MessageInterface = new Message({ sender: senderObjectId, content, timestamp, _id });
         chat.messages.push(message);
 
         await chat.save();

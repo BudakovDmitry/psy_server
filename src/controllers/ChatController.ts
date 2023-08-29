@@ -20,9 +20,9 @@ export const createChat = async (req: Request, res: Response) => {
 export const addMessage = async (req: Request, res: Response) => {
     try {
         const { chatId } = req.params;
-        const { sender, content } = req.body;
+        const { sender, content, _id, timestamp } = req.body;
 
-        const message: MessageInterface = await chatService.addMessage(chatId, sender, content);
+        const message: MessageInterface = await chatService.addMessage(chatId, sender, content, _id, timestamp);
 
         res.status(201).json(message);
     } catch (error: any) {
