@@ -40,6 +40,14 @@ const userSchema = new mongoose.Schema(
               _id: String,
           }]
       },
+      diaryOfGoodness: {
+          type: [{
+              title: String,
+              description: String,
+              date: String,
+              _id: String,
+          }]
+      },
       roles: [{ type: String, ref: 'Role' }]
   },
   { versionKey: false },
