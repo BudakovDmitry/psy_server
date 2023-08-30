@@ -48,6 +48,10 @@ const userSchema = new mongoose.Schema(
               _id: String,
           }]
       },
+      registrationDate: {
+        type: Date,
+          required: true,
+      },
       roles: [{ type: String, ref: 'Role' }]
   },
   { versionKey: false },

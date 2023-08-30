@@ -19,7 +19,7 @@ class AuthService {
         const hashPassword = bcrypt.hashSync(password, 7);
         const activationLink = uuidv4();
         const userRole = await Role.findOne({ value: 'USER'})
-        const user = await User.create({email, password: hashPassword, name, phoneNumber, activationLink, roles: [userRole?.value]})
+        const user = await User.create({email, password: hashPassword, name, phoneNumber, activationLink, roles: [userRole?.value], registrationDate: new Date()})
         await MailService.sendActivationMail(email, `${process.env.API_URL}/api/auth/activate/${activationLink}`);
 
         const userDto = new UserDto(user)

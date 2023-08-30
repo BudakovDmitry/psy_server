@@ -5,6 +5,7 @@ class UserDto {
     id;
     isActivated;
     activationLink;
+    registrationDate;
 
     constructor(model: any) {
         this.name = model.name;
@@ -13,6 +14,7 @@ class UserDto {
         this.id = model._id;
         this.isActivated = model.isActivated
         this.activationLink = model.activationLink
+        this.registrationDate = model.registrationDate
     }
 }
 
