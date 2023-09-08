@@ -3,7 +3,7 @@
     "strict": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "outDir": "dist",
-    "module": "ES6",
+    "module": "es2020",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "target": "ES6",

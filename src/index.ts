@@ -10,6 +10,8 @@ import { options } from './swagger.js';
 import cookieParser from 'cookie-parser';
 import { Server } from 'socket.io';
 import http from 'http';
+import { fileURLToPath } from 'url';
+import path, { dirname } from 'path';
 
 
 const PORT = process.env.PORT || 5000;
@@ -27,12 +29,23 @@ const router = new AppRouter(app);
 
 const specs = swaggerJsDoc(options);
 
+// Отримання шляху до поточного файлу
+const __filename = fileURLToPath(import.meta.url);
+
+// Отримання директорії, в якій знаходиться поточний файл
+const __dirname = dirname(__filename);
 
 app.set('port', process.env.PORT || 5000);
 app.use(express.json());
 app.use(cookieParser())
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 mongoose.set('strictQuery', false);
+
+app.use((req, res, next) => {
+  const uploadDir = path.join(__dirname, 'uploads');
+  req.app.locals.uploadDir = uploadDir;
+  next();
+});
 
 const server = http.createServer(app);
 const io = new Server(server);
