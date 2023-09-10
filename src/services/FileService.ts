@@ -10,9 +10,12 @@ const __dirname = path.dirname(__filename); //
 export const uploadFile = async (file: Express.Multer.File, uploadDir: any, userId: string) => {
 
     try {
-        await User.updateOne({ _id: userId }, { avatar: file.filename });
+        const userWithAvatar = await User.findByIdAndUpdate(userId, { avatar: file.filename }, {
+            new: true
+        });
         console.log('Файл було успішно додано користувачу:', file.filename);
-        return file.filename;
+        console.log('userWithAvatar', userWithAvatar)
+        return userWithAvatar;
     } catch (error) {
         console.error('Помилка під час завантаження файлу:', error);
         throw error; // Прокидуємо помилку далі для обробки її де-небудь вище

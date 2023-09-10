@@ -13,8 +13,9 @@ export const upload = async (req: Request, res: Response) => {
             res.status(500).json({ error: 'Обов\'язково потрібен id користувача' });
         }
 
-        const fileName = await uploadFile(file, uploadDir, userId);
-        res.json({ fileName });
+        const user = await uploadFile(file, uploadDir, userId);
+        console.log('fileName', user)
+        res.json(user);
     } catch (error) {
         res.status(500).json({ error: 'Помилка завантаження файлу' });
     }
