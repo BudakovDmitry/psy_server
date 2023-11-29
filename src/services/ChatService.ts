@@ -13,6 +13,7 @@ export const createChat = async (name: string, participants: string[]) => {
         const chat = new Chat({ name, participants: users });
         return await chat.save();
     } catch (error) {
+        console.log('error', error);
         throw new Error('Помилка при створенні чату');
     }
 };
