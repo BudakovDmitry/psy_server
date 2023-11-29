@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import {DiarySuccessType} from "../types/types";
 
-const userSchema = new mongoose.Schema(
+export const userSchema = new mongoose.Schema(
   {
       name: {
           type: String

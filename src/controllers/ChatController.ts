@@ -8,6 +8,7 @@ import {MessageInterface} from "types";
 export const createChat = async (req: Request, res: Response) => {
     try {
         const { name, participants } = req.body;
+
         const chat = await chatService.createChat(name, participants);
         res.status(201).json(chat);
     } catch (error: any) {

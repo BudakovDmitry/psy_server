@@ -2,13 +2,15 @@
 
 import Chat from '../models/Chat.js';
 import {MessageInterface} from "../types/types";
-import { Types } from 'mongoose';
+import {Types} from 'mongoose';
 import Message from "../models/Message.js";
+import User from "../models/User.js";
 
 // Створення нового чату
 export const createChat = async (name: string, participants: string[]) => {
     try {
-        const chat = new Chat({ name, participants });
+        const users = await User.find({ _id: { $in: participants }})
+        const chat = new Chat({ name, participants: users });
         return await chat.save();
     } catch (error) {
         throw new Error('Помилка при створенні чату');
@@ -50,7 +52,19 @@ export const getChatById = async (chatId: string) => {
 
 export const findChatByUserId = async (userId: string) => {
     try {
-        const chats = await Chat.find({ participants: userId }); // Шукаємо чати, де користувач є учасником
+        console.log('userId', userId);
+        const chats = await Chat.aggregate([
+            {
+                $match: {
+                    participants: {
+                        $elemMatch: {
+                            _id: userId, // Перетворюємо ідентифікатор на об'єкт ObjectId
+                        },
+                    },
+                },
+            },
+        ]); // Шукаємо чати, де користувач є учасником
+        console.log('chats', chats);
         return chats;
     } catch (error) {
         console.error('Помилка пошуку чату:', error);
