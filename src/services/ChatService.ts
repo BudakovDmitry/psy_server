@@ -52,23 +52,10 @@ export const getChatById = async (chatId: string) => {
 
 export const findChatByUserId = async (userId: string) => {
     try {
-        console.log('userId', userId);
-        const chats = await Chat.aggregate([
-            {
-                $match: {
-                    participants: {
-                        $elemMatch: {
-                            _id: userId, // Перетворюємо ідентифікатор на об'єкт ObjectId
-                        },
-                    },
-                },
-            },
-        ]); // Шукаємо чати, де користувач є учасником
-        console.log('chats', chats);
-        return chats;
+        return await Chat.find({'participants._id': userId});
     } catch (error) {
         console.error('Помилка пошуку чату:', error);
-        throw error;
+        throw new Error('Помилка пошуку чату');
     }
 }
 
